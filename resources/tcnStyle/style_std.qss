@@ -1,0 +1,71 @@
+
+
+
+
+/* QComboBox -------------------------------------------------------------- */
+QComboBox {
+    background-color: _D_BackGroundColor_None;
+    border: 4px solid _D_BorderColor_None;
+    color: _D_TextColor_None;
+    border-radius: 10px;
+    min-height: 1.5em;
+}
+
+QComboBox QAbstractItemView {
+    background-color: _D_BackGroundColor_Hover;
+    min-height: 1.5em;
+/*    selection-color: _D_TextColor_Hover;
+    selection-background-color: _D_BackGroundColor_Selected;*/
+}
+
+/*QComboBox:disabled {
+    background-color: _D_BackGroundColor_Disable;
+    border: 4px solid _D_BorderColor_Disable;
+    color: _D_TextColor_Disable;
+    border-radius: 10px;
+}
+
+QComboBox:pressed {
+    background-color: _D_BackGroundColor_Pressed;
+    border: 4px solid _D_BorderColor_Pressed;
+    color: _D_TextColor_Pressed;
+    border-radius: 10px;
+}
+
+QComboBox:selected {
+    background-color: _D_BackGroundColor_Selected;
+    border: 4px solid _D_BorderColor_Selected;
+    color: _D_TextColor_Selected;
+    border-radius: 10px;
+}*/
+
+QComboBox:pressed:hover {
+    background-color: _D_BackGroundColor_Pressed;
+    border: 4px solid _D_BorderColor_Pressed;
+    color: _D_TextColor_Pressed;
+    border-radius: 10px;
+}
+
+QComboBox:hover {
+    background-color: _D_BackGroundColor_Hover;
+    border: 4px solid _D_BorderColor_Hover;
+    color: _D_TextColor_Hover;
+    border-radius: 10px;
+}
+
+/*QComboBox:down-arrow {
+    image: url(":/qss_icons/rc/down_arrow_disabled.png");
+}
+
+QComboBox:down-arrow:on, QComboBox:down-arrow:hover, QComboBox:down-arrow:focus {
+    image: url(":/qss_icons/rc/down_arrow.png");
+}*/
+
+/* QListWidget ------------------------------------------------------------ */
+QListWidget {
+    background-color: _D_BackGroundColor_None;
+    border: 4px solid _D_BorderColor_None;
+    color: _D_TextColor_None;
+    border-radius: 10px;
+}
+

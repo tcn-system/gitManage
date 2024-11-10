@@ -1,0 +1,18 @@
+<RCC>
+  <qresource prefix="qss_icons">
+    <file>rc/down_arrow.png</file>
+    <file>rc/down_arrow_disabled.png</file>
+    <file>rc/left_arrow.png</file>
+    <file>rc/left_arrow_disabled.png</file>
+    <file>rc/right_arrow.png</file>
+    <file>rc/right_arrow_disabled.png</file>
+    <file>rc/up_arrow.png</file>
+    <file>rc/up_arrow_disabled.png</file>
+  </qresource>
+  <qresource prefix="tcnStyle">
+      <file>style.qss</file>
+      <file>style_std.qss</file>
+      <file>style_qpb_check.qss</file>
+      <file>style_qpb_uncheck.qss</file>
+  </qresource>
+</RCC>
