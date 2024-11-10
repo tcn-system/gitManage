@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 set(_PROJET_NAME gitManage)
-set(_PROJET_VERSION v1.0.0)
+set(_PROJET_VERSION v1.0.1)
 
 project(${_PROJET_NAME} VERSION 0.1 LANGUAGES CXX)
 

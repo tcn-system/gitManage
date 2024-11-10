@@ -14,33 +14,33 @@
 #define _D_QS_DOUBLE(X) QString::number(X, 'f', 3)
 #define _D_QS_DOUBLE_1(X) QString::number(X, 'f', 1)
 
-#define _D_QS_HEX_02(X)  QString("%1").arg(X, 2, 16, QChar('0'))
-#define _D_QS_HEX_04(X)  QString("%1").arg(X, 4, 16, QChar('0'))
-#define _D_QS_HEX_08(X)  QString("%1").arg(X, 8, 16, QChar('0'))
+#define _D_QS_HEX_02(X) QString("%1").arg(X, 2, 16, QChar('0'))
+#define _D_QS_HEX_04(X) QString("%1").arg(X, 4, 16, QChar('0'))
+#define _D_QS_HEX_08(X) QString("%1").arg(X, 8, 16, QChar('0'))
 
-#define _D_QS_INT_02(X)  QString("%1").arg(X, 2, 10, QChar('0'))
-#define _D_QS_INT_04(X)  QString("%1").arg(X, 4, 10, QChar('0'))
+#define _D_QS_INT_02(X) QString("%1").arg(X, 2, 10, QChar('0'))
+#define _D_QS_INT_04(X) QString("%1").arg(X, 4, 10, QChar('0'))
 
 const QStringList _D_exeptDir = {
 
     "/0_Build",
     "/0_build",
     "/1_archive",
-    "/1_Archive" ,
-    "/Debug" ,
-    "/Release" ,
+    "/1_Archive",
+    "/Debug",
+    "/Release",
     "/.vscode",
-    "/.cache" ,
-    "/.metadata" ,
-    "/Packages" ,
-    "/Programmes" ,
-    "/Windows" ,
+    "/.cache",
+    "/.metadata",
+    "/Packages",
+    "/Programmes",
+    "/Windows",
     "/Utilisateur"
 };
 
 const QStringList _D_listFolderSearch = {
 
-#if defined (_WIN32) || defined (_WIN64)
+#if defined(_WIN32) || defined(_WIN64)
 
     "D:/OSCAR_NG",
     "D:/POLYCLIM_NG",
@@ -48,11 +48,10 @@ const QStringList _D_listFolderSearch = {
 
 #else
 
-    "/home/tcousin/Bureau/tcn_soft_git"
+    "/home/tcousin/Bureau"
 
 #endif
 
 };
-
 
 #endif // DEFINE_H_
