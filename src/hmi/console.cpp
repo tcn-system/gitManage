@@ -1,5 +1,7 @@
 #include "console.h"
 
+#include <QIcon>
+
 #include "../globalVar.h"
 
 cConsole* c_console;

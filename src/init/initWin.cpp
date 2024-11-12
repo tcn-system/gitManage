@@ -1,5 +1,7 @@
 #include "initWin.h"
 
+#include <QScreen>
+
 #include "../globalVar.h"
 
 cInitWin::cInitWin(QWidget* parent)
