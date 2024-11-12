@@ -19,10 +19,25 @@ cMainWin::cMainWin(QWidget* parent)
 
     QVBoxLayout* left_splitter_layout = new QVBoxLayout;
     {
+        // QScrollBar* scrollBarH = new QScrollBar;
+        // QScrollBar* scrollBarV = new QScrollBar;
+
+        scrollArea = new QScrollArea;
+
+        scrollArea->setWidgetResizable(true);
+        scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        //scrollArea->setHorizontalScrollBar(scrollBarH);
+        scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        //scrollArea->setVerticalScrollBar(scrollBarV);
+
+
         group_gitListProject = new QGroupBox;
         group_gitListProject->setVisible(true);
+        scrollArea->setVisible(true);
+
         group_gitListProject->setTitle(" git project ");
-        left_splitter_layout->addWidget(group_gitListProject);
+        scrollArea->setWidget(group_gitListProject);
+        left_splitter_layout->addWidget(scrollArea);
 
         // left_splitter_layout->addStretch(20);
 
@@ -184,12 +199,19 @@ void cMainWin::load_gitProject()
 
         delete _layout;
     }
+    // if(scrollArea != nullptr)
+    // {
+    //     scrollArea->deleteLater();
+
+    //     delete scrollArea;
+    // }
 
     qpb_back->setVisible(false);
     qpb_settings->setVisible(true);
 
     if (l_gitProject.size() > 0) {
         group_gitListProject->setVisible(true);
+        scrollArea->setVisible(true);
 
         QVBoxLayout* _layout = new QVBoxLayout;
         for (int i = 0; i < l_gitProject.size(); i++) {
@@ -203,6 +225,8 @@ void cMainWin::load_gitProject()
         }
 
         group_gitListProject->setLayout(_layout);
+
+        scrollArea->setMinimumWidth(group_gitListProject->width());
     }
 }
 
@@ -216,6 +240,7 @@ void cMainWin::SLOT_select_gitProject()
         qDebug() << "SLOT_select_gitProject " << current_gitProject.nameProject;
 
         group_gitListProject->setVisible(false);
+        scrollArea->setVisible(false);
 
         projetGitWin->startManage();
         qpb_back->setVisible(true);

@@ -62,6 +62,8 @@ private:
     int idx_list_seach;
 
     // list git project
+    QScrollArea* scrollArea;
+
     QGroupBox* group_gitListProject;
 
     // projet git
