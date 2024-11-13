@@ -822,7 +822,8 @@ bool cManage::verif_answer_merge(QString _branch_src , QString _branch_dst)
             ;
         }
 
-        if( _ligne.contains("files changed") )
+        if( _ligne.contains("files changed")
+         || _ligne.contains("file changed"))
         {
             return true;
         }
