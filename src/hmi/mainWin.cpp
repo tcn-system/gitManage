@@ -63,9 +63,9 @@ cMainWin::cMainWin(QWidget* parent)
         textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
-        textEdit->setAcceptRichText(true);
+        //textEdit->setAcceptRichText(true);
         textEdit->setReadOnly(true);
-        textEdit->setTextInteractionFlags(Qt::NoTextInteraction);
+        //textEdit->setTextInteractionFlags(Qt::NoTextInteraction);
         textEdit->setAlignment(Qt::AlignTop);
         textEdit->setWordWrapMode(QTextOption::NoWrap);
         textEdit->setFrameStyle(QFrame::NoFrame);
@@ -89,12 +89,20 @@ cMainWin::cMainWin(QWidget* parent)
     splitter->addWidget(leftWidget);
     splitter->addWidget(rightWidget);
 
+//    splitter->setCollapsible(0, false);
+//    splitter->setCollapsible(1, false);
+
     setCentralWidget(splitter);
 
     // splitter->setSizes({ 1 , 99999 });
     // splitter->setSizes({ 99999 , 1 , 1 });
 
-    double _resize = 0.5;
+    QList<int> Sizes;
+    Sizes.append(0.3 * sizescreen.height());
+    Sizes.append(0.7 * sizescreen.height());
+    splitter->setSizes(Sizes);
+
+    double _resize = 0.8;
     this->resize(sizescreen.width() * _resize, sizescreen.height() * _resize);
 
     // if (l_screen.size() > 1)
