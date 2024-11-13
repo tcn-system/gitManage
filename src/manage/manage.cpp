@@ -780,6 +780,10 @@ bool cManage::verif_answer_delete_branch(QString _branch)
 
 bool cManage::verif_answer_push(QString _branch)
 {
+
+//    _ba "To https://github.com/tcn-system/gitManage.git" ("To", "https://github.com/tcn-system/gitManage.git")
+//    _ba "ac75ea1..f1fec8f master -> master" ("ac75ea1..f1fec8f", "master", "->", "master")
+
     for (int i = 0; i < answerAction.size(); i++) {
         QString _ligne = answerAction.at(i);
 
@@ -796,12 +800,15 @@ bool cManage::verif_answer_push(QString _branch)
         QStringList l_ligne = _ligne.split(" ");
         if(l_ligne.size() > 3)
         {
-
+            if(not l_ligne.at(1).compare(_branch) and not l_ligne.at(3).compare(_branch))
+            {
+                return true;
+            }
         }
         qDebug() << "_ba" << _ba << l_ligne;
     }
 
-    return true;
+    return false;
 }
 bool cManage::verif_answer_merge(QString _branch_src , QString _branch_dst)
 {
@@ -828,6 +835,10 @@ bool cManage::verif_answer_merge(QString _branch_src , QString _branch_dst)
 }
 bool cManage::verif_answer_pull(QString _branch)
 {
+
+//    _ba "From https://github.com/tcn-system/gitManage" ("From", "https://github.com/tcn-system/gitManage")
+//    _ba "* branch master -> FETCH_HEAD" ("*", "branch", "master", "->", "FETCH_HEAD")
+
     for (int i = 0; i < answerAction.size(); i++) {
         QString _ligne = answerAction.at(i);
 
@@ -844,12 +855,15 @@ bool cManage::verif_answer_pull(QString _branch)
         QStringList l_ligne = _ligne.split(" ");
         if(l_ligne.size() > 3)
         {
-
+            if(not l_ligne.at(2).compare(_branch) and not l_ligne.at(4).compare("FETCH_HEAD"))
+            {
+                return true;
+            }
         }
         qDebug() << "_ba" << _ba << l_ligne;
     }
 
-    return true;
+    return false;
 }
 
 
