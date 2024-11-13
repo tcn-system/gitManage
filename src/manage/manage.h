@@ -139,6 +139,12 @@ private:
 
     void load_branch();
     bool verif_branchs_integrity();
+    bool verif_answer_switch_to_branch(QString _branch);
+    bool verif_answer_delete_branch(QString _branch);
+
+    bool verif_answer_push(QString _branch);
+    bool verif_answer_merge(QString _branch_src , QString _branch_dst);
+    bool verif_answer_pull(QString _branch);
 
     void load_remote();
 

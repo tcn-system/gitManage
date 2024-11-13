@@ -200,6 +200,8 @@ void cManage::SLOT_timerTick()
 
             show_answerAction();
 
+            // Switched to branch 'dev_tcn'
+
             e_manage_stat = e_manage_stat_git_list_branch;
             i_manage_tempo = 0;
         }
@@ -317,8 +319,12 @@ void cManage::SLOT_timerTick()
 
                 show_answerAction();
 
-                e_manage_stat = e_manage_stat_git_push___pull_master;
-                i_manage_tempo = 0;
+                // Switched to branch 'master'
+                if(verif_answer_switch_to_branch(current_gitProject.main_master_branch_name))
+                {
+                    e_manage_stat = e_manage_stat_git_push___pull_master;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -339,8 +345,12 @@ void cManage::SLOT_timerTick()
 
                 show_answerAction();
 
-                e_manage_stat = e_manage_stat_git_push___merge_dev_to_master;
-                i_manage_tempo = 0;
+                // Already up to date
+                if(verif_answer_pull(current_gitProject.main_master_branch_name))
+                {
+                    e_manage_stat = e_manage_stat_git_push___merge_dev_to_master;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -360,8 +370,13 @@ void cManage::SLOT_timerTick()
 
                 show_answerAction();
 
-                e_manage_stat = e_manage_stat_git_push___push_master_to_remote;
-                i_manage_tempo = 0;
+                // Updating 5fd7b48..ac75ea1
+                // Fast-forward
+                if(verif_answer_merge(current_gitProject.main_master_branch_name , default_dev_branch))
+                {
+                    e_manage_stat = e_manage_stat_git_push___push_master_to_remote;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -383,8 +398,13 @@ void cManage::SLOT_timerTick()
 
                 show_answerAction();
 
-                e_manage_stat = e_manage_stat_git_push___delete_dev;
-                i_manage_tempo = 0;
+                // To https://github.com/tcn-system/gitManage.git
+                //   5fd7b48..ac75ea1  master -> master
+                if(verif_answer_push(current_gitProject.main_master_branch_name))
+                {
+                    e_manage_stat = e_manage_stat_git_push___delete_dev;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -404,8 +424,12 @@ void cManage::SLOT_timerTick()
 
                 show_answerAction();
 
-                e_manage_stat = e_manage_stat_git_list_branch;
-                i_manage_tempo = 0;
+                // Deleted branch dev_tcn (was ac75ea1).
+                if(verif_answer_delete_branch(default_dev_branch))
+                {
+                    e_manage_stat = e_manage_stat_git_list_branch;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -459,8 +483,12 @@ void cManage::SLOT_timerTick()
 
                 show_answerAction();
 
-                e_manage_stat = e_manage_stat_git_pull___pull_master;
-                i_manage_tempo = 0;
+                // Switched to branch 'master'
+                if(verif_answer_switch_to_branch(current_gitProject.main_master_branch_name))
+                {
+                    e_manage_stat = e_manage_stat_git_pull___pull_master;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -481,8 +509,11 @@ void cManage::SLOT_timerTick()
 
                 show_answerAction();
 
-                e_manage_stat = e_manage_stat_git_pull___checkout_master_to_dev;
-                i_manage_tempo = 0;
+                if(verif_answer_pull(current_gitProject.main_master_branch_name))
+                {
+                    e_manage_stat = e_manage_stat_git_pull___checkout_master_to_dev;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -502,8 +533,11 @@ void cManage::SLOT_timerTick()
 
                 show_answerAction();
 
-                e_manage_stat = e_manage_stat_git_pull___merge_master_to_dev;
-                i_manage_tempo = 0;
+                if(verif_answer_switch_to_branch(default_dev_branch))
+                {
+                    e_manage_stat = e_manage_stat_git_pull___merge_master_to_dev;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -523,8 +557,11 @@ void cManage::SLOT_timerTick()
 
                 show_answerAction();
 
-                e_manage_stat = e_manage_stat_git_status;
-                i_manage_tempo = 0;
+                if(verif_answer_merge(default_dev_branch, current_gitProject.main_master_branch_name))
+                {
+                    e_manage_stat = e_manage_stat_git_status;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -712,6 +749,109 @@ bool cManage::verif_branchs_integrity()
 
     return false;
 }
+
+bool cManage::verif_answer_switch_to_branch(QString _branch)
+{
+    for (int i = 0; i < answerAction.size(); i++) {
+        QString _ligne = answerAction.at(i);
+
+        if( _ligne.contains("Switched to branch")
+        and _ligne.contains(_branch) )
+        {
+            return true;
+        }
+    }
+    return false;
+}
+bool cManage::verif_answer_delete_branch(QString _branch)
+{
+    for (int i = 0; i < answerAction.size(); i++) {
+        QString _ligne = answerAction.at(i);
+
+        if( _ligne.contains("Deleted branch")
+        and _ligne.contains(_branch) )
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool cManage::verif_answer_push(QString _branch)
+{
+    for (int i = 0; i < answerAction.size(); i++) {
+        QString _ligne = answerAction.at(i);
+
+        if( _ligne.contains("Already up to date") )
+        {
+            return true;
+        }
+
+        _ligne = _ligne.trimmed();
+        _ligne = _ligne.simplified();
+
+        QByteArray _ba = QByteArray(_ligne.toLatin1());
+
+        QStringList l_ligne = _ligne.split(" ");
+        if(l_ligne.size() > 3)
+        {
+
+        }
+        qDebug() << "_ba" << _ba << l_ligne;
+    }
+
+    return true;
+}
+bool cManage::verif_answer_merge(QString _branch_src , QString _branch_dst)
+{
+    for (int i = 0; i < answerAction.size(); i++) {
+        QString _ligne = answerAction.at(i);
+
+        if( _ligne.contains("Fast-forward") ) // type merge
+        {
+            ;
+        }
+
+        if( _ligne.contains("files changed") )
+        {
+            return true;
+        }
+
+        if( _ligne.contains("Already up to date") )
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+bool cManage::verif_answer_pull(QString _branch)
+{
+    for (int i = 0; i < answerAction.size(); i++) {
+        QString _ligne = answerAction.at(i);
+
+        if( _ligne.contains("Already up to date") )
+        {
+            return true;
+        }
+
+        _ligne = _ligne.trimmed();
+        _ligne = _ligne.simplified();
+
+        QByteArray _ba = QByteArray(_ligne.toLatin1());
+
+        QStringList l_ligne = _ligne.split(" ");
+        if(l_ligne.size() > 3)
+        {
+
+        }
+        qDebug() << "_ba" << _ba << l_ligne;
+    }
+
+    return true;
+}
+
 
 void cManage::load_remote()
 {
