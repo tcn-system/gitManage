@@ -852,11 +852,6 @@ bool cManage::verif_answer_push(QString _branch)
     for (int i = 0; i < answerAction.size(); i++) {
         QString _ligne = answerAction.at(i);
 
-        if( _ligne.contains("Already up to date") )
-        {
-            return true;
-        }
-
         _ligne = _ligne.trimmed();
         _ligne = _ligne.simplified();
 
@@ -871,6 +866,11 @@ bool cManage::verif_answer_push(QString _branch)
             }
         }
         qDebug() << "_ba" << _ba << l_ligne;
+
+        if( _ligne.contains("Already up to date") )
+        {
+            return true;
+        }
     }
 
     return false;
@@ -908,11 +908,6 @@ bool cManage::verif_answer_pull(QString _branch)
     for (int i = 0; i < answerAction.size(); i++) {
         QString _ligne = answerAction.at(i);
 
-        if( _ligne.contains("Already up to date") )
-        {
-            return true;
-        }
-
         _ligne = _ligne.trimmed();
         _ligne = _ligne.simplified();
 
@@ -927,6 +922,11 @@ bool cManage::verif_answer_pull(QString _branch)
             }
         }
         qDebug() << "_ba" << _ba << l_ligne;
+
+        if( _ligne.contains("Already up to date") )
+        {
+            return true;
+        }
     }
 
     return false;
