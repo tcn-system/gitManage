@@ -41,8 +41,12 @@ public slots:
     void SLOT_closeEvent();
 
     void SLOT_qpb_config();
-    void SLOT_qpb_branch();
-    void SLOT_qpb_remote();
+
+    void SLOT_qpb_branch_list();
+    void SLOT_qpb_branch_switch();
+
+    void SLOT_qpb_remote_list();
+
     void SLOT_qpb_status();
     void SLOT_qpb_commit();
     void SLOT_get_message_commit(QString message);
@@ -59,8 +63,12 @@ private:
 
     // action git
     QPushButton* qpb_config;
-    QPushButton* qpb_branch;
-    QPushButton* qpb_remote;
+
+    QPushButton* qpb_branch_list;
+    QPushButton* qpb_branch_switch;
+
+    QPushButton* qpb_remote_list;
+
     QPushButton* qpb_status;
     QPushButton* qpb_commit;
 

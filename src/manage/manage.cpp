@@ -642,8 +642,16 @@ void cManage::SLOT_timerTick()
                 manage_status();
             }
 
-            e_manage_stat = e_manage_stat_wait;
-            i_manage_tempo = 0;
+            if(verify_name_current_branch())
+            {
+                e_manage_stat = e_manage_stat_wait;
+                i_manage_tempo = 0;
+            }
+            else
+            {
+                e_manage_stat = e_manage_stat_git_list_branch;
+                i_manage_tempo = 0;
+            }
         }
         break;
 
@@ -675,14 +683,21 @@ bool cManage::action(eActionStat _action)
             i_manage_tempo = 0;
             return true;
         }
-        if (_action == e_action_git_branch) {
+        if (_action == e_action_git_branch_list) {
             e_manage_action = _action;
 
             e_manage_stat = e_manage_stat_git_list_branch;
             i_manage_tempo = 0;
             return true;
         }
-        if (_action == e_action_git_remote) {
+        if (_action == e_action_git_branch_switch) {
+            e_manage_action = _action;
+
+            e_manage_stat = e_manage_stat_git_checkout_dev_branch;
+            i_manage_tempo = 0;
+            return true;
+        }
+        if (_action == e_action_git_remote_list) {
             e_manage_action = _action;
 
             e_manage_stat = e_manage_stat_git_list_remote;
@@ -745,18 +760,42 @@ void cManage::manage_status()
     current_gitProject.nbre_commit = -1;
 
     for (int i = 0; i < answerAction.size(); i++) {
-        if (
-            answerAction.at(i).contains("Your branch is ahead")
-            || answerAction.at(i).contains("Your branch is up to date")) {
+
+        QString _ligne = answerAction.at(i);
+
+        if (_ligne.contains("Your branch is ahead")
+            || _ligne.contains("Your branch is up to date"))
+        {
             current_gitProject.nbre_commit = 1;
         }
 
-        if (answerAction.at(i).contains("nothing to commit")) {
-
+        if (_ligne.contains("nothing to commit"))
+        {
             current_gitProject.is_up_to_date = true;
         }
     }
 }
+bool cManage::verify_name_current_branch()
+{
+    for (int i = 0; i < answerAction.size(); i++) {
+
+        QString _ligne = answerAction.at(i);
+
+        if(_ligne.contains("On branch")) {
+
+            _ligne = _ligne.replace("On branch","");
+            _ligne = _ligne.trimmed();
+
+            if(current_gitProject.l_branch.at(current_gitProject.idx_branch_in_process).nameBranch == _ligne)
+            {
+                return true;
+            }
+        }
+
+    }
+    return false;
+}
+
 
 void cManage::load_branch()
 {
@@ -867,7 +906,8 @@ bool cManage::verif_answer_push(QString _branch)
         }
         qDebug() << "_ba" << _ba << l_ligne;
 
-        if( _ligne.contains("Already up to date") )
+        if( _ligne.contains("Already up to date")
+         || _ligne.contains("Everything up-to-date") )
         {
             return true;
         }
@@ -891,7 +931,8 @@ bool cManage::verif_answer_merge(QString _branch_src , QString _branch_dst)
             return true;
         }
 
-        if( _ligne.contains("Already up to date") )
+        if( _ligne.contains("Already up to date")
+         || _ligne.contains("Everything up-to-date") )
         {
             return true;
         }
@@ -923,7 +964,8 @@ bool cManage::verif_answer_pull(QString _branch)
         }
         qDebug() << "_ba" << _ba << l_ligne;
 
-        if( _ligne.contains("Already up to date") )
+        if( _ligne.contains("Already up to date")
+         || _ligne.contains("Everything up-to-date") )
         {
             return true;
         }

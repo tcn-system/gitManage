@@ -77,8 +77,12 @@ enum eActionStat {
     e_action_init,
 
     e_action_git_config,
-    e_action_git_branch,
-    e_action_git_remote,
+
+    e_action_git_branch_list,
+    e_action_git_branch_switch,
+
+    e_action_git_remote_list,
+
     e_action_git_commit,
     e_action_git_status,
 
@@ -140,6 +144,7 @@ private:
     void show_answerAction();
 
     void manage_status();
+    bool verify_name_current_branch();
 
     void load_branch();
     bool verif_branchs_integrity();
