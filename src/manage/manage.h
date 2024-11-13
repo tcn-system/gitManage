@@ -64,6 +64,10 @@ enum eManageStat {
     e_manage_stat_git_pull___pull_master,
     e_manage_stat_git_pull___checkout_master_to_dev,
     e_manage_stat_git_pull___merge_master_to_dev,
+
+
+    /// gestion des erreurs
+    e_manage_stat_errors,
 };
 
 enum eActionStat {

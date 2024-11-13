@@ -300,6 +300,11 @@ void cManage::SLOT_timerTick()
                     e_manage_stat = e_manage_stat_git_push___checkout_dev_to_master;
                     i_manage_tempo = 0;
                 }
+                else
+                {
+                    e_manage_stat = e_manage_stat_wait;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -323,6 +328,11 @@ void cManage::SLOT_timerTick()
                 if(verif_answer_switch_to_branch(current_gitProject.main_master_branch_name))
                 {
                     e_manage_stat = e_manage_stat_git_push___pull_master;
+                    i_manage_tempo = 0;
+                }
+                else
+                {
+                    e_manage_stat = e_manage_stat_errors;
                     i_manage_tempo = 0;
                 }
             }
@@ -351,6 +361,11 @@ void cManage::SLOT_timerTick()
                     e_manage_stat = e_manage_stat_git_push___merge_dev_to_master;
                     i_manage_tempo = 0;
                 }
+                else
+                {
+                    e_manage_stat = e_manage_stat_errors;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -375,6 +390,11 @@ void cManage::SLOT_timerTick()
                 if(verif_answer_merge(current_gitProject.main_master_branch_name , default_dev_branch))
                 {
                     e_manage_stat = e_manage_stat_git_push___push_master_to_remote;
+                    i_manage_tempo = 0;
+                }
+                else
+                {
+                    e_manage_stat = e_manage_stat_errors;
                     i_manage_tempo = 0;
                 }
             }
@@ -405,6 +425,11 @@ void cManage::SLOT_timerTick()
                     e_manage_stat = e_manage_stat_git_push___delete_dev;
                     i_manage_tempo = 0;
                 }
+                else
+                {
+                    e_manage_stat = e_manage_stat_errors;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -428,6 +453,11 @@ void cManage::SLOT_timerTick()
                 if(verif_answer_delete_branch(default_dev_branch))
                 {
                     e_manage_stat = e_manage_stat_git_list_branch;
+                    i_manage_tempo = 0;
+                }
+                else
+                {
+                    e_manage_stat = e_manage_stat_errors;
                     i_manage_tempo = 0;
                 }
             }
@@ -464,6 +494,11 @@ void cManage::SLOT_timerTick()
                     e_manage_stat = e_manage_stat_git_pull___checkout_dev_to_master;
                     i_manage_tempo = 0;
                 }
+                else
+                {
+                    e_manage_stat = e_manage_stat_wait;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -487,6 +522,11 @@ void cManage::SLOT_timerTick()
                 if(verif_answer_switch_to_branch(current_gitProject.main_master_branch_name))
                 {
                     e_manage_stat = e_manage_stat_git_pull___pull_master;
+                    i_manage_tempo = 0;
+                }
+                else
+                {
+                    e_manage_stat = e_manage_stat_errors;
                     i_manage_tempo = 0;
                 }
             }
@@ -514,6 +554,11 @@ void cManage::SLOT_timerTick()
                     e_manage_stat = e_manage_stat_git_pull___checkout_master_to_dev;
                     i_manage_tempo = 0;
                 }
+                else
+                {
+                    e_manage_stat = e_manage_stat_errors;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -538,6 +583,11 @@ void cManage::SLOT_timerTick()
                     e_manage_stat = e_manage_stat_git_pull___merge_master_to_dev;
                     i_manage_tempo = 0;
                 }
+                else
+                {
+                    e_manage_stat = e_manage_stat_errors;
+                    i_manage_tempo = 0;
+                }
             }
         }
         break;
@@ -560,6 +610,11 @@ void cManage::SLOT_timerTick()
                 if(verif_answer_merge(default_dev_branch, current_gitProject.main_master_branch_name))
                 {
                     e_manage_stat = e_manage_stat_git_status;
+                    i_manage_tempo = 0;
+                }
+                else
+                {
+                    e_manage_stat = e_manage_stat_errors;
                     i_manage_tempo = 0;
                 }
             }
@@ -592,12 +647,20 @@ void cManage::SLOT_timerTick()
         }
         break;
 
+
+    case e_manage_stat_errors:
+        if (i_manage_tempo == 1) {
+            c_globalVar->debugInConsoleEOL("cManage:: ERROR");
+
+            i_manage_tempo = -1;
+        }
+        break;
+
+
     default:
         stopManage();
         break;
     }
-
-//    answerAction.clear();
 
     connect(qt_timer, &QTimer::timeout, this, &cManage::SLOT_timerTick);
 }
