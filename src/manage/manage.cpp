@@ -139,6 +139,24 @@ void cManage::SLOT_timerTick()
         }
         break;
 
+    case e_manage_stat_git_list_log:
+        if (i_manage_tempo == 1) {
+            c_globalVar->debugInConsoleEOL("cManage:: git logs list");
+
+            askAction.clear();
+            askAction << "log";
+
+            startProcess();
+        }
+        if (processAction == nullptr) {
+
+            show_answerAction();
+
+            e_manage_stat = e_manage_stat_wait;
+            i_manage_tempo = 0;
+        }
+        break;
+
     case e_manage_stat_git_list_branch:
         if (i_manage_tempo == 1) {
             c_globalVar->debugInConsoleEOL("cManage:: git branch list");
@@ -680,6 +698,13 @@ bool cManage::action(eActionStat _action)
             e_manage_action = _action;
 
             e_manage_stat = e_manage_stat_git_list_config;
+            i_manage_tempo = 0;
+            return true;
+        }
+        if (_action == e_action_git_log) {
+            e_manage_action = _action;
+
+            e_manage_stat = e_manage_stat_git_list_log;
             i_manage_tempo = 0;
             return true;
         }

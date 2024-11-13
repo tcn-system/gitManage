@@ -20,6 +20,9 @@ enum eManageStat {
     /// gestion de la config
     e_manage_stat_git_list_config,
 
+    /// gstion des logs
+    e_manage_stat_git_list_log,
+
     /// gestion des branches git
     e_manage_stat_git_list_branch,
     e_manage_stat_git_create_dev_branch,
@@ -77,6 +80,7 @@ enum eActionStat {
     e_action_init,
 
     e_action_git_config,
+    e_action_git_log,
 
     e_action_git_branch_list,
     e_action_git_branch_switch,

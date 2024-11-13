@@ -41,6 +41,7 @@ public slots:
     void SLOT_closeEvent();
 
     void SLOT_qpb_config();
+    void SLOT_qpb_log();
 
     void SLOT_qpb_branch_list();
     void SLOT_qpb_branch_switch();
@@ -63,6 +64,7 @@ private:
 
     // action git
     QPushButton* qpb_config;
+    QPushButton* qpb_log;
 
     QPushButton* qpb_branch_list;
     QPushButton* qpb_branch_switch;

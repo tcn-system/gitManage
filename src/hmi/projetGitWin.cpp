@@ -18,6 +18,11 @@ cProjetGitWin::cProjetGitWin(QWidget* parent)
                 connect(qpb_config, SIGNAL(pressed()), this, SLOT(SLOT_qpb_config()));
                 action_layout->addWidget(qpb_config);
 
+                qpb_log = new QPushButton;
+                qpb_log->setText("log");
+                connect(qpb_log, SIGNAL(pressed()), this, SLOT(SLOT_qpb_log()));
+                action_layout->addWidget(qpb_log);
+
                 QGroupBox* group_branch = new QGroupBox;
                 group_branch->setTitle(" branch ");
                 {
@@ -144,6 +149,14 @@ void cProjetGitWin::SLOT_qpb_config()
     if (c_manage->action(e_action_git_config))
         group_gitProject->setEnabled(false);
 }
+void cProjetGitWin::SLOT_qpb_log()
+{
+    emit SIGNAL_textEdit("BTN - log\n");
+
+    if (c_manage->action(e_action_git_log))
+        group_gitProject->setEnabled(false);
+}
+
 void cProjetGitWin::SLOT_qpb_branch_list()
 {
     emit SIGNAL_textEdit("BTN - branch list\n");
