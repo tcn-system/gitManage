@@ -65,8 +65,9 @@ enum eManageStat {
     e_manage_stat_git_pull___verif_commit_dev,
     e_manage_stat_git_pull___checkout_dev_to_master,
     e_manage_stat_git_pull___pull_master,
-    e_manage_stat_git_pull___checkout_master_to_dev,
-    e_manage_stat_git_pull___merge_master_to_dev,
+
+    e_manage_stat_git___checkout_master_to_dev,
+    e_manage_stat_git___merge_master_to_dev,
 
 
     /// gestion des erreurs

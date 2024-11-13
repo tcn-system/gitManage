@@ -440,7 +440,9 @@ void cManage::SLOT_timerTick()
                 //   5fd7b48..ac75ea1  master -> master
                 if(verif_answer_push(current_gitProject.main_master_branch_name))
                 {
-                    e_manage_stat = e_manage_stat_git_push___delete_dev;
+                    //e_manage_stat = e_manage_stat_git_push___delete_dev;
+
+                    e_manage_stat = e_manage_stat_git___checkout_master_to_dev;
                     i_manage_tempo = 0;
                 }
                 else
@@ -569,7 +571,7 @@ void cManage::SLOT_timerTick()
 
                 if(verif_answer_pull(current_gitProject.main_master_branch_name))
                 {
-                    e_manage_stat = e_manage_stat_git_pull___checkout_master_to_dev;
+                    e_manage_stat = e_manage_stat_git___checkout_master_to_dev;
                     i_manage_tempo = 0;
                 }
                 else
@@ -580,7 +582,12 @@ void cManage::SLOT_timerTick()
             }
         }
         break;
-    case e_manage_stat_git_pull___checkout_master_to_dev:
+
+        ///
+        /// merge master to dev
+        ///
+
+    case e_manage_stat_git___checkout_master_to_dev:
         if (i_manage_tempo == 1) {
             c_globalVar->debugInConsoleEOL("cManage:: PULL git checkout master to dev");
 
@@ -598,7 +605,7 @@ void cManage::SLOT_timerTick()
 
                 if(verif_answer_switch_to_branch(default_dev_branch))
                 {
-                    e_manage_stat = e_manage_stat_git_pull___merge_master_to_dev;
+                    e_manage_stat = e_manage_stat_git___merge_master_to_dev;
                     i_manage_tempo = 0;
                 }
                 else
@@ -609,7 +616,8 @@ void cManage::SLOT_timerTick()
             }
         }
         break;
-    case e_manage_stat_git_pull___merge_master_to_dev:
+
+    case e_manage_stat_git___merge_master_to_dev:
         if (i_manage_tempo == 1) {
             c_globalVar->debugInConsoleEOL("cManage:: PULL git merge master to dev");
 
