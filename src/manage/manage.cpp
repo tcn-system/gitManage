@@ -597,7 +597,7 @@ void cManage::SLOT_timerTick()
         break;
     }
 
-    answerAction.clear();
+//    answerAction.clear();
 
     connect(qt_timer, &QTimer::timeout, this, &cManage::SLOT_timerTick);
 }
