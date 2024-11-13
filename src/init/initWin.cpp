@@ -11,15 +11,6 @@ cInitWin::cInitWin(QWidget* parent)
     this->setWindowTitle(cMake_projectName + QString(" - page::init - ") + cMake_projectVersion + " qt" + cMake_qtVersion + " - tcn-system.com");
     this->setWindowIcon(QIcon(_D_ICON_PATH));
 
-    QList<QScreen *>    l_screen = QApplication::screens();
-    list_screen.clear();
-    for(int i = 0;i < l_screen.size();i++)
-    {
-        qDebug() << "screen" << QString::number(i) << " " << l_screen.at(i)->size();
-        list_screen.push_back(l_screen.at(i)->geometry());
-    }
-    sizescreen = QGuiApplication::primaryScreen()->geometry();
-
     QVBoxLayout* init_layout = new QVBoxLayout;
     {
         QLabel* image_label = new QLabel;

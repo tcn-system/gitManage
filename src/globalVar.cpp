@@ -1,5 +1,7 @@
 #include "globalVar.h"
 
+#include <QScreen>
+
 #include "define.h"
 
 cGlobalVar::cGlobalVar()
@@ -7,8 +9,15 @@ cGlobalVar::cGlobalVar()
     fileManager = new cFileManager(QDir::homePath() + _D_PROJET_PATH_FILE);
     fileManager->verifyAllDirCreate();
 
+    QList<QScreen *>    l_screen = QApplication::screens();
     list_screen.clear();
-    sizescreen = QRect(0, 0, 0, 0);
+    for(int i = 0;i < l_screen.size();i++)
+    {
+        qDebug() << "screen" << QString::number(i) << " " << l_screen.at(i)->size();
+        list_screen.push_back(l_screen.at(i)->geometry());
+    }
+    sizescreen = QGuiApplication::primaryScreen()->geometry();
+
     app_color_profile = e_profile_choose_standard;
     app_show_console = false;
     app_font_size = 12;

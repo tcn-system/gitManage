@@ -26,12 +26,12 @@ bool cSettings::_read_App_Parametre_()
 
         app_color_profile = (eProfileChoose)_settings.value("generale/color_profile", 0).toInt();
         app_show_console = _settings.value("generale/show_console", 0).toBool();
-        app_font_size = _settings.value("generale/font_size", 0).toInt();
+        app_font_size = _settings.value("generale/font_size", 12).toInt();
 
-        c_globalVar->_exeptDir = _settings.value("generale/_exeptDir").value<QStringList>();
-        c_globalVar->_listFolderSearch = _settings.value("generale/_listFolderSearch").value<QStringList>();
+        c_globalVar->_exeptDir = _settings.value("generale/_exeptDir",QStringList()).value<QStringList>();
+        c_globalVar->_listFolderSearch = _settings.value("generale/_listFolderSearch",QStringList()).value<QStringList>();
 
-        default_dev_branch = _settings.value("git/default_dev_branch").toString();
+        default_dev_branch = _settings.value("git/default_dev_branch","").toString();
         git_log_command = _settings.value("git/git_log_command", 0).toBool();
 
         return true;

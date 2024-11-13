@@ -2,9 +2,10 @@
 #include <QFile>
 #include <QGuiApplication>
 #include <QIcon>
-#include <QScreen>
 #include <QTextStream>
 #include <QtCore/QCoreApplication>
+
+#include <QMessageBox>
 
 #include "tcnStyle.h"
 
@@ -39,6 +40,7 @@ int main(int argc, char* argv[])
 
     c_settings = new cSettings;
 
+    int _exit = -1;
     bool _settings_ok = c_settings->_read_App_Parametre_();
 
     c_tcnStyle = new cTcnStyle(&app, app_color_profile, app_font_size);
@@ -53,26 +55,45 @@ int main(int argc, char* argv[])
         qDebug() << "_exit_settings" << _exit_settings;
     }
 
-    cInitWin* initWin = new cInitWin;
-    initWin->exec();
-    int _exit_init = initWin->get_exitValue();
+    if(default_dev_branch.size() >= 3)
+    {
+        cInitWin* initWin = new cInitWin;
+        initWin->exec();
+        int _exit_init = initWin->get_exitValue();
 
-    qDebug() << "_exit_init" << _exit_init;
+        qDebug() << "_exit_init" << _exit_init;
 
-    c_manage = new cManage;
+        c_manage = new cManage;
 
-    if (app_show_console) {
-        c_console = new cConsole();
-        c_console->show();
+        if (app_show_console) {
+            c_console = new cConsole();
+            c_console->show();
+        }
+
+        cMainWin* mainWin = new cMainWin;
+
+        mainWin->show();
+
+        _exit = app.exec();
+    }
+    else
+    {
+        QMessageBox msgBox;
+
+        msgBox.setWindowTitle(cMake_projectName + QString(" - page::information - ") + cMake_projectVersion + " qt" + cMake_qtVersion + " - tcn-system.com");
+        msgBox.setWindowIcon(QIcon(_D_ICON_PATH));
+
+        msgBox.setText("missing default dev branch name : restart app and inform it");
+
+        msgBox.setStandardButtons(QMessageBox::Ok);
+
+        if(msgBox.exec() == QMessageBox::Ok)
+        {
+            // do something else
+        }
     }
 
-    cMainWin* mainWin = new cMainWin;
-
-    mainWin->show();
-
-    int _exit = app.exec();
-
-    qDebug() << "exit";
+    qDebug() << "exit" << _exit;
 
     if (c_console != nullptr) {
         c_console->close();

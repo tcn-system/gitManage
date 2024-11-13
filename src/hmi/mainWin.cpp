@@ -91,7 +91,7 @@ cMainWin::cMainWin(QWidget* parent)
 
     setCentralWidget(splitter);
 
-    // splitter->setSizes({ 1 , 99999 , 99999 });
+    // splitter->setSizes({ 1 , 99999 });
     // splitter->setSizes({ 99999 , 1 , 1 });
 
     double _resize = 0.5;
@@ -241,6 +241,8 @@ void cMainWin::SLOT_select_gitProject()
 
         group_gitListProject->setVisible(false);
         scrollArea->setVisible(false);
+
+        textEdit->setText("");
 
         projetGitWin->startManage();
         qpb_back->setVisible(true);

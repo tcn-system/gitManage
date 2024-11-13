@@ -113,10 +113,10 @@ void cManage::SLOT_timerTick()
             e_manage_action = e_action_none;
         }
         if (i_manage_tempo > 1000) {
-            emit SIGNAL_action_busy();
+            //emit SIGNAL_action_busy();
 
-            i_manage_tempo = 0;
-            e_manage_stat = e_manage_stat_git_status;
+            i_manage_tempo = 1;
+            //e_manage_stat = e_manage_stat_git_status;
         }
         break;
 
