@@ -91,6 +91,10 @@ struct sGitProject {
     QList<sGitBranch> l_branch;
     QString main_master_branch_name;
 
+    int idx_branch_remote_in_process;
+    QList<sGitBranch> l_branch_remote;
+
+
     sGitRemote l_remotePush;
     sGitRemote l_remoteFetch;
 
@@ -105,6 +109,9 @@ struct sGitProject {
         idx_branch_in_process = -1;
         l_branch.clear();
         main_master_branch_name = "";
+
+        idx_branch_remote_in_process = -1;
+        l_branch_remote.clear();
 
         l_remotePush.init();
         l_remoteFetch.init();

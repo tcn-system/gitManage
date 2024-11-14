@@ -33,6 +33,14 @@ cProjetGitWin::cProjetGitWin(QWidget* parent)
                         connect(qpb_branch_list, SIGNAL(pressed()), this, SLOT(SLOT_qpb_branch_list()));
                         branch_layout->addWidget(qpb_branch_list);
 
+                        qcb_branch_list = new QComboBox;
+                        pw_branch_list = new cParaWidget(new QLabel("branch local"),qcb_branch_list);
+                        branch_layout->addWidget(pw_branch_list);
+
+                        qcb_branch_remote_list = new QComboBox;
+                        pw_branch_remote_list = new cParaWidget(new QLabel("branch remote"),qcb_branch_remote_list);
+                        branch_layout->addWidget(pw_branch_remote_list);
+
                         qpb_branch_switch = new QPushButton;
                         qpb_branch_switch->setText(" switch ");
                         qpb_branch_switch->setVisible(false);
@@ -164,6 +172,15 @@ void cProjetGitWin::SLOT_qpb_branch_list()
     if (c_manage->action(e_action_git_branch_list))
         group_gitProject->setEnabled(false);
 }
+void cProjetGitWin::SLOT_qcb_branch_list_indexChange(int _index)
+{
+
+}
+void cProjetGitWin::SLOT_qcb_branch_remote_list_indexChange(int _index)
+{
+
+}
+
 void cProjetGitWin::SLOT_qpb_branch_switch()
 {
     emit SIGNAL_textEdit("BTN - branch switch\n");
@@ -261,6 +278,21 @@ void cProjetGitWin::SLOT_action_finish(eActionStat _action)
     if (_action == e_action_init || _action == e_action_git_branch_list) {
         group_gitProject->setTitle(current_gitProject.nameProject + " :: " + current_gitProject.l_branch.at(current_gitProject.idx_branch_in_process).nameBranch);
     }
+
+    qcb_branch_list->clear();
+    for( int _i = 0 ; _i < current_gitProject.l_branch.size() ; _i++)
+    {
+        qcb_branch_list->addItem(current_gitProject.l_branch.at(_i).nameBranch);
+    }
+    qcb_branch_list->setCurrentIndex(current_gitProject.idx_branch_in_process);
+
+    qcb_branch_remote_list->clear();
+    for( int _i = 0 ; _i < current_gitProject.l_branch_remote.size() ; _i++)
+    {
+        qcb_branch_remote_list->addItem(current_gitProject.l_branch_remote.at(_i).nameBranch);
+    }
+    qcb_branch_remote_list->setCurrentIndex(current_gitProject.idx_branch_remote_in_process);
+
 
     group_gitProject->setEnabled(true);
 }

@@ -22,6 +22,8 @@
 
 #include "../globalVar.h"
 
+#include "../widgets/paraWidget.h"
+
 class cProjetGitWin : public QWidget {
     Q_OBJECT
 
@@ -44,6 +46,8 @@ public slots:
     void SLOT_qpb_log();
 
     void SLOT_qpb_branch_list();
+    void SLOT_qcb_branch_list_indexChange(int _index);
+    void SLOT_qcb_branch_remote_list_indexChange(int _index);
     void SLOT_qpb_branch_switch();
 
     void SLOT_qpb_remote_list();
@@ -67,6 +71,10 @@ private:
     QPushButton* qpb_log;
 
     QPushButton* qpb_branch_list;
+    QComboBox*   qcb_branch_list;
+    cParaWidget* pw_branch_list;
+    QComboBox*   qcb_branch_remote_list;
+    cParaWidget* pw_branch_remote_list;
     QPushButton* qpb_branch_switch;
 
     QPushButton* qpb_remote_list;

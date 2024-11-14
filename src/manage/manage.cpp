@@ -162,7 +162,8 @@ void cManage::SLOT_timerTick()
             c_globalVar->debugInConsoleEOL("cManage:: git branch list");
 
             askAction.clear();
-            askAction << "branch";
+            askAction << "branch"
+                      << "-a";
 
             startProcess();
         }
@@ -833,24 +834,58 @@ bool cManage::verify_name_current_branch()
 void cManage::load_branch()
 {
     current_gitProject.l_branch.clear();
+    int nbre_local_branch = 0;
+    int nbre_remote_branch = 0;
 
     for (int i = 0; i < answerAction.size(); i++) {
 
         QString _ligne = answerAction.at(i);
+
         if (_ligne.size() > 3) {
-            if (_ligne.contains("*"))
-                current_gitProject.idx_branch_in_process = i;
 
-            _ligne = _ligne.replace("*", "");
-            _ligne = _ligne.simplified();
-            _ligne = _ligne.trimmed();
+            QStringList l_element = _ligne.split("/");
 
-            sGitBranch _branch;
-            _branch.init();
+            qDebug() << "l_element" << l_element;
 
-            _branch.nameBranch = _ligne;
+            if(l_element.size() > 2) // branch remote
+            {
+                _ligne = l_element.at(2);
 
-            current_gitProject.l_branch.push_back(_branch);
+                _ligne = _ligne.simplified();
+                _ligne = _ligne.trimmed();
+
+                sGitBranch _branch;
+                _branch.init();
+
+                _branch.nameBranch = _ligne;
+
+                current_gitProject.l_branch_remote.push_back(_branch);
+
+                if(current_gitProject.idx_branch_remote_in_process < 0)
+                    current_gitProject.idx_branch_remote_in_process = 0;
+
+                nbre_remote_branch++;
+            }
+            else                     // branch local
+            {
+                _ligne = l_element.at(0);
+
+                if (_ligne.contains("*"))
+                    current_gitProject.idx_branch_in_process = nbre_local_branch;
+
+                _ligne = _ligne.replace("*", "");
+                _ligne = _ligne.simplified();
+                _ligne = _ligne.trimmed();
+
+                sGitBranch _branch;
+                _branch.init();
+
+                _branch.nameBranch = _ligne;
+
+                current_gitProject.l_branch.push_back(_branch);
+
+                nbre_local_branch++;
+            }
         }
     }
 
