@@ -23,12 +23,18 @@ enum eManageStat {
     /// gstion des logs
     e_manage_stat_git_list_log,
 
-    /// gestion des branches git
+    /// gestion des branches
+//    How to List Remote Branches in Git?
+//        git branch -r . Lists all the remote branches.
+//        git branch -r -v . Lists all the remote branches with the latest commit hash and commit message.
+//        git ls-remote . Lists all the references in the remote repository, including the branches.
+//        git remote show [remote_name ]. ...
+//        git branch -a .
     e_manage_stat_git_list_branch,
     e_manage_stat_git_create_dev_branch,
     e_manage_stat_git_checkout_dev_branch,
 
-    /// gestion des remote git
+    /// gestion des remote
     e_manage_stat_git_list_remote,
 
     /// gestion de la branche en cours
