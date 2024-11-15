@@ -34,11 +34,11 @@ cProjetGitWin::cProjetGitWin(QWidget* parent)
                         branch_layout->addWidget(qpb_branch_list);
 
                         qcb_branch_list = new QComboBox;
-                        pw_branch_list = new cParaWidget(new QLabel("branch local"),qcb_branch_list);
+                        pw_branch_list = new cParaWidget(new QLabel("branch local"), qcb_branch_list);
                         branch_layout->addWidget(pw_branch_list);
 
                         qcb_branch_remote_list = new QComboBox;
-                        pw_branch_remote_list = new cParaWidget(new QLabel("branch remote"),qcb_branch_remote_list);
+                        pw_branch_remote_list = new cParaWidget(new QLabel("branch remote"), qcb_branch_remote_list);
                         branch_layout->addWidget(pw_branch_remote_list);
 
                         qpb_branch_switch = new QPushButton;
@@ -46,7 +46,6 @@ cProjetGitWin::cProjetGitWin(QWidget* parent)
                         qpb_branch_switch->setVisible(false);
                         connect(qpb_branch_switch, SIGNAL(pressed()), this, SLOT(SLOT_qpb_branch_switch()));
                         branch_layout->addWidget(qpb_branch_switch);
-
                     }
                     group_branch->setLayout(branch_layout);
                 }
@@ -174,11 +173,9 @@ void cProjetGitWin::SLOT_qpb_branch_list()
 }
 void cProjetGitWin::SLOT_qcb_branch_list_indexChange(int _index)
 {
-
 }
 void cProjetGitWin::SLOT_qcb_branch_remote_list_indexChange(int _index)
 {
-
 }
 
 void cProjetGitWin::SLOT_qpb_branch_switch()
@@ -240,11 +237,10 @@ void cProjetGitWin::SLOT_action_finish(eActionStat _action)
 
     qpb_branch_list->setText(" list ( " + QString::number(current_gitProject.l_branch.size()) + " )");
 
-    if(current_gitProject.l_branch.at(current_gitProject.idx_branch_in_process).nameBranch != default_dev_branch)
+    if (current_gitProject.l_branch.at(current_gitProject.idx_branch_in_process).nameBranch != default_dev_branch)
         qpb_branch_switch->setVisible(true);
     else
         qpb_branch_switch->setVisible(false);
-
 
     qpb_remote_list->setText(" list ( " + QString::number(current_gitProject.l_remotePush.nameRemote.size() > 0) + " )");
 
@@ -280,19 +276,22 @@ void cProjetGitWin::SLOT_action_finish(eActionStat _action)
     }
 
     qcb_branch_list->clear();
-    for( int _i = 0 ; _i < current_gitProject.l_branch.size() ; _i++)
-    {
+    for (int _i = 0; _i < current_gitProject.l_branch.size(); _i++) {
         qcb_branch_list->addItem(current_gitProject.l_branch.at(_i).nameBranch);
     }
     qcb_branch_list->setCurrentIndex(current_gitProject.idx_branch_in_process);
 
-    qcb_branch_remote_list->clear();
-    for( int _i = 0 ; _i < current_gitProject.l_branch_remote.size() ; _i++)
-    {
-        qcb_branch_remote_list->addItem(current_gitProject.l_branch_remote.at(_i).nameBranch);
-    }
-    qcb_branch_remote_list->setCurrentIndex(current_gitProject.idx_branch_remote_in_process);
+    if (current_gitProject.l_branch_remote.size() > 0) {
 
+        qcb_branch_remote_list->clear();
+        for (int _i = 0; _i < current_gitProject.l_branch_remote.size(); _i++) {
+            qcb_branch_remote_list->addItem(current_gitProject.l_branch_remote.at(_i).nameBranch);
+        }
+        qcb_branch_remote_list->setCurrentIndex(current_gitProject.idx_branch_remote_in_process);
+
+        pw_branch_remote_list->setVisible(true);
+    } else
+        pw_branch_remote_list->setVisible(false);
 
     group_gitProject->setEnabled(true);
 }
