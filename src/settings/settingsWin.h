@@ -63,19 +63,19 @@ private:
     QLineEdit* lineEdit;
 
     QComboBox* qcb_app_color_profile;
-    cParaWidget* pw_app_color_profile;
+    cParaWidget_x2* pw_app_color_profile;
 
     QComboBox* qcb_app_show_console;
-    cParaWidget* pw_app_show_console;
+    cParaWidget_x2* pw_app_show_console;
 
     QSpinBox* qsb_app_font_size;
-    cParaWidget* pw_app_font_size;
+    cParaWidget_x2* pw_app_font_size;
 
     QLineEdit* qle_default_dev_branch;
-    cParaWidget* pw_default_dev_branch;
+    cParaWidget_x2* pw_default_dev_branch;
 
     QComboBox* qcb_git_log_command;
-    cParaWidget* pw_git_log_command;
+    cParaWidget_x2* pw_git_log_command;
 
     QPushButton* qpb_ok;
 

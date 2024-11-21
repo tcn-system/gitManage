@@ -31,7 +31,7 @@ cSettingsWin::cSettingsWin(QWidget* parent)
             qcb_app_color_profile->addItem(" dark ");
             qcb_app_color_profile->setCurrentIndex(app_color_profile);
             connect(qcb_app_color_profile, SIGNAL(currentIndexChanged(int)), this, SLOT(SLOT_qcb_app_color_profile_currentIndexChanged(int)));
-            pw_app_color_profile = new cParaWidget(new QLabel("App color profile"), qcb_app_color_profile);
+            pw_app_color_profile = new cParaWidget_x2(new QLabel("App color profile"), qcb_app_color_profile);
             settings_layout->addWidget(pw_app_color_profile);
 
             qcb_app_show_console = new QComboBox;
@@ -39,14 +39,14 @@ cSettingsWin::cSettingsWin(QWidget* parent)
             qcb_app_show_console->addItem(" ON  ");
             qcb_app_show_console->setCurrentIndex(app_show_console);
             connect(qcb_app_show_console, SIGNAL(currentIndexChanged(int)), this, SLOT(SLOT_qcb_app_show_console_currentIndexChanged(int)));
-            pw_app_show_console = new cParaWidget(new QLabel("App show console"), qcb_app_show_console);
+            pw_app_show_console = new cParaWidget_x2(new QLabel("App show console"), qcb_app_show_console);
             settings_layout->addWidget(pw_app_show_console);
 
             qsb_app_font_size = new QSpinBox;
             qsb_app_font_size->setValue(app_font_size);
             qsb_app_font_size->setRange(10, 16);
             connect(qsb_app_font_size, SIGNAL(valueChanged(int)), this, SLOT(SLOT_qsb_app_font_size_valueChanged(int)));
-            pw_app_font_size = new cParaWidget(new QLabel("App font size"), qsb_app_font_size);
+            pw_app_font_size = new cParaWidget_x2(new QLabel("App font size"), qsb_app_font_size);
             settings_layout->addWidget(pw_app_font_size);
 
             cStringListWdgt* stringList_exeptDir = new cStringListWdgt(&c_globalVar->_exeptDir, QString("_exeptDir"));
@@ -58,7 +58,7 @@ cSettingsWin::cSettingsWin(QWidget* parent)
             qle_default_dev_branch = new QLineEdit;
             qle_default_dev_branch->setText(default_dev_branch);
             connect(qle_default_dev_branch, SIGNAL(textChanged(QString)), this, SLOT(SLOT_qle_default_dev_branch_valueChanged(QString)));
-            pw_default_dev_branch = new cParaWidget(new QLabel("Default dev branch"), qle_default_dev_branch);
+            pw_default_dev_branch = new cParaWidget_x2(new QLabel("Default dev branch"), qle_default_dev_branch);
             settings_layout->addWidget(pw_default_dev_branch);
 
             qcb_git_log_command = new QComboBox;
@@ -66,7 +66,7 @@ cSettingsWin::cSettingsWin(QWidget* parent)
             qcb_git_log_command->addItem(" ON  ");
             qcb_git_log_command->setCurrentIndex(git_log_command);
             connect(qcb_git_log_command, SIGNAL(currentIndexChanged(int)), this, SLOT(SLOT_qcb_git_log_command_currentIndexChanged(int)));
-            pw_git_log_command = new cParaWidget(new QLabel("git log command"), qcb_git_log_command);
+            pw_git_log_command = new cParaWidget_x2(new QLabel("git log command"), qcb_git_log_command);
             settings_layout->addWidget(pw_git_log_command);
 
             settings_layout->addStretch(1);

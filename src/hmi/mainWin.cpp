@@ -98,11 +98,11 @@ cMainWin::cMainWin(QWidget* parent)
     // splitter->setSizes({ 99999 , 1 , 1 });
 
     QList<int> Sizes;
-    Sizes.append(0.3 * sizescreen.height());
-    Sizes.append(0.7 * sizescreen.height());
+    Sizes.append(0.3 * sizescreen.width());
+    Sizes.append(0.7 * sizescreen.width());
     splitter->setSizes(Sizes);
 
-    double _resize = 0.8;
+    double _resize = 0.85;
     this->resize(sizescreen.width() * _resize, sizescreen.height() * _resize);
 
     // if (l_screen.size() > 1)

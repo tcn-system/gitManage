@@ -34,11 +34,13 @@ cProjetGitWin::cProjetGitWin(QWidget* parent)
                         branch_layout->addWidget(qpb_branch_list);
 
                         qcb_branch_list = new QComboBox;
-                        pw_branch_list = new cParaWidget(new QLabel("branch local"), qcb_branch_list);
+                        qcb_branch_list->setSizeAdjustPolicy( QComboBox::AdjustToContents );
+                        pw_branch_list = new cParaWidget_x2(new QLabel("branch local"), qcb_branch_list);
                         branch_layout->addWidget(pw_branch_list);
 
                         qcb_branch_remote_list = new QComboBox;
-                        pw_branch_remote_list = new cParaWidget(new QLabel("branch remote"), qcb_branch_remote_list);
+                        qcb_branch_remote_list->setSizeAdjustPolicy( QComboBox::AdjustToContents );
+                        pw_branch_remote_list = new cParaWidget_x2(new QLabel("branch remote"), qcb_branch_remote_list);
                         branch_layout->addWidget(pw_branch_remote_list);
 
                         qpb_branch_switch = new QPushButton;
@@ -77,24 +79,60 @@ cProjetGitWin::cProjetGitWin(QWidget* parent)
 
                 action_layout->addStretch(1);
 
-                qpb_push = new QPushButton("push ->");
-                qpb_push->setEnabled(false);
-                qpb_push->setVisible(false);
-                connect(qpb_push, SIGNAL(pressed()), this, SLOT(SLOT_qpb_push()));
-                action_layout->addWidget(qpb_push);
+                QGroupBox* group_push = new QGroupBox;
+                group_push->setTitle(" push ");
+                {
+                    QVBoxLayout* push_layout = new QVBoxLayout;
+                    {
+                        qcb_push_from = new QComboBox;
+                        qcb_push_from->setSizeAdjustPolicy( QComboBox::AdjustToContents );
 
-                qpb_pull = new QPushButton("pull <-");
-                qpb_pull->setEnabled(false);
-                qpb_pull->setVisible(false);
-                connect(qpb_pull, SIGNAL(pressed()), this, SLOT(SLOT_qpb_pull()));
-                action_layout->addWidget(qpb_pull);
+                        qcb_push_to = new QComboBox;
+                        qcb_push_to->setSizeAdjustPolicy( QComboBox::AdjustToContents );
+
+                        pw_push = new cParaWidget_x4(new QLabel("from") , qcb_push_from , new QLabel("to") , qcb_push_to);
+                        push_layout->addWidget(pw_push);
+
+                        qpb_push = new QPushButton("push ->");
+                        qpb_push->setEnabled(false);
+                        qpb_push->setVisible(false);
+                        connect(qpb_push, SIGNAL(pressed()), this, SLOT(SLOT_qpb_push()));
+                        push_layout->addWidget(qpb_push);
+                    }
+                    group_push->setLayout(push_layout);
+                }
+                action_layout->addWidget(group_push);
+
+                QGroupBox* group_pull = new QGroupBox;
+                group_pull->setTitle(" pull ");
+                {
+                    QVBoxLayout* pull_layout = new QVBoxLayout;
+                    {
+                        qcb_pull_from = new QComboBox;
+                        qcb_pull_from->setSizeAdjustPolicy( QComboBox::AdjustToContents );
+
+                        qcb_pull_to = new QComboBox;
+                        qcb_pull_to->setSizeAdjustPolicy( QComboBox::AdjustToContents );
+
+                        pw_pull = new cParaWidget_x4(new QLabel("from") , qcb_pull_from , new QLabel("to") , qcb_pull_to);
+                        pull_layout->addWidget(pw_pull);
+
+                        qpb_pull = new QPushButton("pull <-");
+                        qpb_pull->setEnabled(false);
+                        qpb_pull->setVisible(false);
+                        connect(qpb_pull, SIGNAL(pressed()), this, SLOT(SLOT_qpb_pull()));
+                        pull_layout->addWidget(qpb_pull);
+                    }
+                    group_pull->setLayout(pull_layout);
+                }
+                action_layout->addWidget(group_pull);
             }
             group_gitProject->setLayout(action_layout);
         }
         main_layout->addWidget(group_gitProject);
     }
 
-    this->setMinimumWidth(200);
+    //this->setMinimumWidth(200);
 
     setLayout(main_layout);
 
@@ -215,6 +253,14 @@ void cProjetGitWin::SLOT_get_message_commit(QString message)
     }
 }
 
+void cProjetGitWin::SLOT_qcb_push_from_indexChange(int _index)
+{
+
+}
+void cProjetGitWin::SLOT_qcb_push_to_indexChange(int _index)
+{
+
+}
 void cProjetGitWin::SLOT_qpb_push()
 {
     emit SIGNAL_textEdit("BTN - push\n");
@@ -223,6 +269,14 @@ void cProjetGitWin::SLOT_qpb_push()
         group_gitProject->setEnabled(false);
 }
 
+void cProjetGitWin::SLOT_qcb_pull_from_indexChange(int _index)
+{
+
+}
+void cProjetGitWin::SLOT_qcb_pull_to_indexChange(int _index)
+{
+
+}
 void cProjetGitWin::SLOT_qpb_pull()
 {
     emit SIGNAL_textEdit("BTN - pull\n");
@@ -281,6 +335,18 @@ void cProjetGitWin::SLOT_action_finish(eActionStat _action)
     }
     qcb_branch_list->setCurrentIndex(current_gitProject.idx_branch_in_process);
 
+    qcb_push_from->clear();
+    for (int _i = 0; _i < current_gitProject.l_branch.size(); _i++) {
+        qcb_push_from->addItem(current_gitProject.l_branch.at(_i).nameBranch);
+    }
+    qcb_push_from->setCurrentIndex(current_gitProject.idx_branch_push_from_in_process);
+
+    qcb_pull_to->clear();
+    for (int _i = 0; _i < current_gitProject.l_branch.size(); _i++) {
+        qcb_pull_to->addItem(current_gitProject.l_branch.at(_i).nameBranch);
+    }
+    qcb_pull_to->setCurrentIndex(current_gitProject.idx_branch_pull_to_in_process);
+
     if (current_gitProject.l_branch_remote.size() > 0) {
 
         qcb_branch_remote_list->clear();
@@ -289,11 +355,30 @@ void cProjetGitWin::SLOT_action_finish(eActionStat _action)
         }
         qcb_branch_remote_list->setCurrentIndex(current_gitProject.idx_branch_remote_in_process);
 
+
+        qcb_push_to->clear();
+        for (int _i = 0; _i < current_gitProject.l_branch_remote.size(); _i++) {
+            qcb_push_to->addItem(current_gitProject.l_branch_remote.at(_i).nameBranch);
+        }
+        qcb_push_to->setCurrentIndex(current_gitProject.idx_branch_push_to_in_process);
+
+        qcb_pull_from->clear();
+        for (int _i = 0; _i < current_gitProject.l_branch_remote.size(); _i++) {
+            qcb_pull_from->addItem(current_gitProject.l_branch_remote.at(_i).nameBranch);
+        }
+        qcb_pull_from->setCurrentIndex(current_gitProject.idx_branch_pull_from_in_process);
+
+
         pw_branch_remote_list->setVisible(true);
+
     } else
         pw_branch_remote_list->setVisible(false);
 
+//    qcb_push_to->setSizeAdjustPolicy( QComboBox::AdjustToContents );
+
     group_gitProject->setEnabled(true);
+
+
 }
 
 void cProjetGitWin::SLOT_action_busy()

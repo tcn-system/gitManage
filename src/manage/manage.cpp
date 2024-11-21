@@ -862,8 +862,15 @@ void cManage::load_branch()
 
                 current_gitProject.l_branch_remote.push_back(_branch);
 
-                if(current_gitProject.idx_branch_remote_in_process < 0)
-                    current_gitProject.idx_branch_remote_in_process = 0;
+                if(current_gitProject.idx_branch_remote_in_process < 0 and (_ligne.contains("master") or _ligne.contains("main")))
+                {
+                    current_gitProject.idx_branch_remote_in_process = nbre_remote_branch;
+                }
+
+                if(current_gitProject.idx_branch_push_to_in_process < 0 and (_ligne.contains("master") or _ligne.contains("main")))
+                    current_gitProject.idx_branch_push_to_in_process = nbre_remote_branch;
+                if(current_gitProject.idx_branch_pull_from_in_process < 0 and (_ligne.contains("master") or _ligne.contains("main")))
+                    current_gitProject.idx_branch_pull_from_in_process = nbre_remote_branch;
 
                 nbre_remote_branch++;
             }
@@ -873,6 +880,11 @@ void cManage::load_branch()
 
                 if (_ligne.contains("*"))
                     current_gitProject.idx_branch_in_process = nbre_local_branch;
+
+                if(current_gitProject.idx_branch_push_from_in_process < 0 and (_ligne.contains("master") or _ligne.contains("main")))
+                    current_gitProject.idx_branch_push_from_in_process = nbre_local_branch;
+                if(current_gitProject.idx_branch_pull_to_in_process < 0 and (_ligne.contains("master") or _ligne.contains("main")))
+                    current_gitProject.idx_branch_pull_to_in_process = nbre_local_branch;
 
                 _ligne = _ligne.replace("*", "");
                 _ligne = _ligne.simplified();
@@ -892,7 +904,7 @@ void cManage::load_branch()
 
     for (int i = 0; i < current_gitProject.l_branch.size(); i++) {
         c_globalVar->debugInConsoleEOL("branch -> " + current_gitProject.l_branch.at(i).nameBranch);
-    }
+    }    
 }
 bool cManage::verif_branchs_integrity()
 {

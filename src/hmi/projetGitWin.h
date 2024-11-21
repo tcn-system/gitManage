@@ -56,7 +56,12 @@ public slots:
     void SLOT_qpb_commit();
     void SLOT_get_message_commit(QString message);
 
+    void SLOT_qcb_push_from_indexChange(int _index);
+    void SLOT_qcb_push_to_indexChange(int _index);
     void SLOT_qpb_push();
+
+    void SLOT_qcb_pull_from_indexChange(int _index);
+    void SLOT_qcb_pull_to_indexChange(int _index);
     void SLOT_qpb_pull();
 
     void SLOT_action_finish(eActionStat _action);
@@ -72,9 +77,9 @@ private:
 
     QPushButton* qpb_branch_list;
     QComboBox*   qcb_branch_list;
-    cParaWidget* pw_branch_list;
+    cParaWidget_x2* pw_branch_list;
     QComboBox*   qcb_branch_remote_list;
-    cParaWidget* pw_branch_remote_list;
+    cParaWidget_x2* pw_branch_remote_list;
     QPushButton* qpb_branch_switch;
 
     QPushButton* qpb_remote_list;
@@ -82,7 +87,16 @@ private:
     QPushButton* qpb_status;
     QPushButton* qpb_commit;
 
+    // push
+    QComboBox*   qcb_push_from;
+    QComboBox*   qcb_push_to;
+    cParaWidget_x4* pw_push;
     QPushButton* qpb_push;
+
+    // pull
+    QComboBox*   qcb_pull_from;
+    QComboBox*   qcb_pull_to;
+    cParaWidget_x4* pw_pull;
     QPushButton* qpb_pull;
 };
 

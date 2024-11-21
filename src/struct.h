@@ -95,6 +95,12 @@ struct sGitProject {
     QList<sGitBranch> l_branch_remote;
 
 
+    int idx_branch_push_from_in_process;
+    int idx_branch_push_to_in_process;
+
+    int idx_branch_pull_from_in_process;
+    int idx_branch_pull_to_in_process;
+
     sGitRemote l_remotePush;
     sGitRemote l_remoteFetch;
 
@@ -112,6 +118,12 @@ struct sGitProject {
 
         idx_branch_remote_in_process = -1;
         l_branch_remote.clear();
+
+        idx_branch_push_from_in_process = -1;
+        idx_branch_push_to_in_process = -1;
+
+        idx_branch_pull_from_in_process = -1;
+        idx_branch_pull_to_in_process = -1;
 
         l_remotePush.init();
         l_remoteFetch.init();
