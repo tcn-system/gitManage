@@ -834,6 +834,7 @@ bool cManage::verify_name_current_branch()
 void cManage::load_branch()
 {
     current_gitProject.l_branch.clear();
+
     int nbre_local_branch = 0;
     int nbre_remote_branch = 0;
 
@@ -841,15 +842,15 @@ void cManage::load_branch()
 
         QString _ligne = answerAction.at(i);
 
-        if (_ligne.size() > 3) {
+        if (_ligne.size() > 3 and not _ligne.contains("HEAD")) {
 
             QStringList l_element = _ligne.split("/");
 
             qDebug() << "l_element" << l_element;
 
-            if(l_element.size() > 2) // branch remote
+            if(l_element.size() > 2 and l_element.at(0).contains("remotes")) // branch remote
             {
-                _ligne = l_element.at(2);
+                _ligne = l_element.at(1) + "/" + l_element.at(2);
 
                 _ligne = _ligne.simplified();
                 _ligne = _ligne.trimmed();
