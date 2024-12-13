@@ -9,6 +9,9 @@ cPushBtn::cPushBtn(sGitProject _gitProject , QWidget *parent) :
     QString _color;
     int _col = 2;
 
+    if(_gitProject.is_up_to_date == false)
+        _col = 0;
+
     switch(_col)
     {
     case 0:  _color = "rgb(255,0,0)";       break;

@@ -223,6 +223,9 @@ void cMainWin::load_gitProject()
 
         QVBoxLayout* _layout = new QVBoxLayout;
         for (int i = 0; i < l_gitProject.size(); i++) {
+
+            verif_satus_git_project((sGitProject*) &l_gitProject.at(i));
+
             cPushBtn* _push = new cPushBtn(l_gitProject.at(i));
 
             _push->setProperty("id_list", i + 1);
@@ -253,6 +256,7 @@ void cMainWin::SLOT_select_gitProject()
         textEdit->setText("");
 
         projetGitWin->startManage();
+
         qpb_back->setVisible(true);
         qpb_settings->setVisible(false);
     }
@@ -285,4 +289,55 @@ void cMainWin::SLOT_textEdit(QString _text)
     textEdit->setText(_text_previous);
 
     textEdit->verticalScrollBar()->setValue(textEdit->verticalScrollBar()->maximum());
+}
+
+
+bool cMainWin::verif_satus_git_project(sGitProject *_gitProject)
+{
+    bool _up_to_date = false;
+
+    // LANG=en_US
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    env.insert("LANG", "en_US");
+
+    QProcess* processStatus = new QProcess;
+    processStatus->setWorkingDirectory(_gitProject->dirPath.path());
+    processStatus->setProcessEnvironment(env);
+    processStatus->setProgram("git");
+    processStatus->setArguments(QStringList() << "status");
+
+    processStatus->start();
+    processStatus->waitForFinished();
+
+    QByteArray strdata = processStatus->readAll();
+    QStringList answerAction = QString(strdata).split("\n");
+
+    processStatus->kill();
+
+    delete processStatus;
+
+    //qDebug()<< "verif_satus_git_project" << answerAction;
+
+    _gitProject->is_up_to_date = false;
+    _gitProject->nbre_commit = -1;
+
+    for (int i = 0; i < answerAction.size(); i++) {
+
+        QString _ligne = answerAction.at(i);
+
+        if (_ligne.contains("Your branch is ahead")
+            || _ligne.contains("Your branch is up to date"))
+        {
+            _gitProject->nbre_commit = 1;
+        }
+
+        if (_ligne.contains("nothing to commit"))
+        {
+            _gitProject->is_up_to_date = true;
+
+            _up_to_date = true;
+        }
+    }
+
+    return _up_to_date;
 }

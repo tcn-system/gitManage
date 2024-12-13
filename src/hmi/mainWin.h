@@ -75,6 +75,9 @@ private:
     QTextEdit* textEdit;
 
     void load_gitProject();
+
+
+    bool verif_satus_git_project(sGitProject* _gitProject);
 };
 
 #endif // MAIN_WIN_H_
