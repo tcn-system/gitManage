@@ -55,8 +55,7 @@ int main(int argc, char* argv[])
         qDebug() << "_exit_settings" << _exit_settings;
     }
 
-    if(default_dev_branch.size() >= 3)
-    {
+    if (default_dev_branch.size() >= 3) {
         cInitWin* initWin = new cInitWin;
         initWin->exec();
         int _exit_init = initWin->get_exitValue();
@@ -75,9 +74,7 @@ int main(int argc, char* argv[])
         mainWin->show();
 
         _exit = app.exec();
-    }
-    else
-    {
+    } else {
         QMessageBox msgBox;
 
         msgBox.setWindowTitle(cMake_projectName + QString(" - page::information - ") + cMake_projectVersion + " qt" + cMake_qtVersion + " - tcn-system.com");
@@ -87,8 +84,7 @@ int main(int argc, char* argv[])
 
         msgBox.setStandardButtons(QMessageBox::Ok);
 
-        if(msgBox.exec() == QMessageBox::Ok)
-        {
+        if (msgBox.exec() == QMessageBox::Ok) {
             // do something else
         }
     }

@@ -26,10 +26,9 @@ cMainWin::cMainWin(QWidget* parent)
 
         scrollArea->setWidgetResizable(true);
         scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-        //scrollArea->setHorizontalScrollBar(scrollBarH);
+        // scrollArea->setHorizontalScrollBar(scrollBarH);
         scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-        //scrollArea->setVerticalScrollBar(scrollBarV);
-
+        // scrollArea->setVerticalScrollBar(scrollBarV);
 
         group_gitListProject = new QGroupBox;
         group_gitListProject->setVisible(true);
@@ -63,9 +62,9 @@ cMainWin::cMainWin(QWidget* parent)
         textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
-        //textEdit->setAcceptRichText(true);
+        // textEdit->setAcceptRichText(true);
         textEdit->setReadOnly(true);
-        //textEdit->setTextInteractionFlags(Qt::NoTextInteraction);
+        // textEdit->setTextInteractionFlags(Qt::NoTextInteraction);
         textEdit->setAlignment(Qt::AlignTop);
         textEdit->setWordWrapMode(QTextOption::NoWrap);
         textEdit->setFrameStyle(QFrame::NoFrame);
@@ -89,8 +88,8 @@ cMainWin::cMainWin(QWidget* parent)
     splitter->addWidget(leftWidget);
     splitter->addWidget(rightWidget);
 
-//    splitter->setCollapsible(0, false);
-//    splitter->setCollapsible(1, false);
+    //    splitter->setCollapsible(0, false);
+    //    splitter->setCollapsible(1, false);
 
     setCentralWidget(splitter);
 
@@ -98,8 +97,8 @@ cMainWin::cMainWin(QWidget* parent)
     // splitter->setSizes({ 99999 , 1 , 1 });
 
     QList<int> Sizes;
-    Sizes.append(0.3 * sizescreen.width());
-    Sizes.append(0.7 * sizescreen.width());
+    Sizes.append(0.4 * sizescreen.width());
+    Sizes.append(0.6 * sizescreen.width());
     splitter->setSizes(Sizes);
 
     double _resize = 0.85;
@@ -224,7 +223,7 @@ void cMainWin::load_gitProject()
         QVBoxLayout* _layout = new QVBoxLayout;
         for (int i = 0; i < l_gitProject.size(); i++) {
 
-            verif_satus_git_project((sGitProject*) &l_gitProject.at(i));
+            verif_satus_git_project((sGitProject*)&l_gitProject.at(i));
 
             cPushBtn* _push = new cPushBtn(l_gitProject.at(i));
 
@@ -291,8 +290,7 @@ void cMainWin::SLOT_textEdit(QString _text)
     textEdit->verticalScrollBar()->setValue(textEdit->verticalScrollBar()->maximum());
 }
 
-
-bool cMainWin::verif_satus_git_project(sGitProject *_gitProject)
+bool cMainWin::verif_satus_git_project(sGitProject* _gitProject)
 {
     bool _up_to_date = false;
 
@@ -316,7 +314,7 @@ bool cMainWin::verif_satus_git_project(sGitProject *_gitProject)
 
     delete processStatus;
 
-    //qDebug()<< "verif_satus_git_project" << answerAction;
+    // qDebug()<< "verif_satus_git_project" << answerAction;
 
     _gitProject->is_up_to_date = false;
     _gitProject->nbre_commit = -1;
@@ -326,13 +324,11 @@ bool cMainWin::verif_satus_git_project(sGitProject *_gitProject)
         QString _ligne = answerAction.at(i);
 
         if (_ligne.contains("Your branch is ahead")
-            || _ligne.contains("Your branch is up to date"))
-        {
+            || _ligne.contains("Your branch is up to date")) {
             _gitProject->nbre_commit = 1;
         }
 
-        if (_ligne.contains("nothing to commit"))
-        {
+        if (_ligne.contains("nothing to commit")) {
             _gitProject->is_up_to_date = true;
 
             _up_to_date = true;
